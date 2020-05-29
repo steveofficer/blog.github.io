@@ -50,8 +50,29 @@ Read in a textual representation of the crossword grid:
 ++++++++++
 ```
 
-which represents the crossword grid ![Blank crossword](/assets/images/posts/2020-05-29/EmptyCrossWord.png)
+which represents the crossword grid 
 
-It is then a dynamic programming problem, where we are trying to map a set of words to a set of spaces, trying each word against each space.
-One optimization we can make is that because we know the length of each word, and we know the length of each space we can compare then lengths and only consider pairs with the same length.
-Another constraint we need to apply is that Rows and Columns can intersect and share common characters. So we need to consider the characters already present in the grid when we try to match a word to a space.
+![Blank crossword](/assets/images/posts/2020-05-29/EmptyCrossWord.png)
+
+We then want to find all the contiguous regions that represent the placeholders of where we want to place the words.
+
+![Find Rows and Columns](/assets/images/posts/2020-05-29/ColumnsAndRowsIdentified.png)
+
+We have found 4 contiguous regions.
+1. Starts at (1,0). Ends at (1,6).
+1. Starts at (5,5). Ends at (5,8).
+1. Starts at (1,2). Ends at (6,2).
+1. Starts at (1,5). Ends at (6,5).
+
+Which is great because we have 4 words that we are trying to place, namely `AGRA, NORWAY, ENGLAND, GWALIOR`
+
+One immediate optimization we can make is to sort the words and regions by length frequency so that we can make sure we can quickly shrink the search space. This is because we can quickly eliminate the regions that only have a few possibilities, and then do trial and error on the spaces that have many possibilities.
+
+In this case, we know that `AGRA` is the only word that can appear at `(5,5), (5,8)` and we know that `NORWAY` is the only word that can appear at `(1,5), (6,5)`.
+So what we are left with is deciding how to match `ENGLAND` and `GWALIOR`, which gives us a search space of `2`
+
+In order to place words, we have 2 constraints:
+1. The length of the word vs the length of the region. We can only match a word to a space if they have the same length.
+1. The blocks that are already filled. If the region overlaps with other regions, we can only match words that have the same characters in the overlapped blocks.
+
+This is a dynamic programming problem, where we can break the problem down by matching 1 word to 1 space, removing them from the search space, and then trying to solve the problem with the remaining words and regions.
