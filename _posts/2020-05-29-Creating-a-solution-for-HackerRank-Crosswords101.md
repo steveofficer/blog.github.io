@@ -71,6 +71,8 @@ One immediate optimization we can make is to sort the words and regions by lengt
 In this case, we know that `AGRA` is the only word that can appear at `(5,5), (5,8)` and we know that `NORWAY` is the only word that can appear at `(1,5), (6,5)`.
 So what we are left with is deciding how to match `ENGLAND` and `GWALIOR`, which gives us a search space of `2`
 
+![Match Exact Matches](/assets/images/posts/2020-05-29/PartiallyFilled.png)
+
 In order to place words, we have 2 constraints:
 1. The length of the word vs the length of the region. We can only match a word to a space if they have the same length.
 1. The blocks that are already filled. If the region overlaps with other regions, we can only match words that have the same characters in the overlapped blocks.
