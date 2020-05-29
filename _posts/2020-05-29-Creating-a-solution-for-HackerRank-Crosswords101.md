@@ -36,7 +36,8 @@ Then from the rows, we can find all the columns.
 
 Graphically and at a high level this is what we are trying to do:
 
-```
+Read in a textual representation of the crossword grid:
+`
 +-++++++++
 +-++++++++
 +-------++
@@ -47,8 +48,10 @@ Graphically and at a high level this is what we are trying to do:
 +++++-++++
 +++++-++++
 ++++++++++
-```
- represents the crossword grid 
+`
+
+which represents the crossword grid ![Blank crossword](/assets/images/posts/2020-05-29/EmptyCrossWord.png)
+
 It is then a dynamic programming problem, where we are trying to map a set of words to a set of spaces, trying each word against each space.
 One optimization we can make is that because we know the length of each word, and we know the length of each space we can compare then lengths and only consider pairs with the same length.
 Another constraint we need to apply is that Rows and Columns can intersect and share common characters. So we need to consider the characters already present in the grid when we try to match a word to a space.
