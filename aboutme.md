@@ -2,18 +2,24 @@ My name is Steve
 
 ## Work History
 
-# AbacusNext
+### AbacusNext
 
-# Jabil
+### Jabil
 
-# Castle Computer Services
+### Castle Computer Services
 
-# Toshiba Medical Visualization Systems Europe
+### Toshiba Medical Visualization Systems Europe
 
-# Evision
+### Evision
 
-# EasiRun
+### EasiRun
 
 ## Education
 
-# Interests
+### The Open Universiry
+
+### Van Zyl & Pritchard
+
+## Interests
+ - Learning different languages and technologies such as Rust, WASM, F#, Python, TypeScript
+ - Coin collecting
