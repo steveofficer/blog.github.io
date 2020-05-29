@@ -1,0 +1,13 @@
+---
+---
+
+@import "{{ site.theme }}";
+
+nav.siteNav {
+  font-size: 1.8 em;
+  
+  a {
+    color: whitesmoke;
+    margin: 10px;
+  }
+}
