@@ -4,6 +4,8 @@ My name is Steve and I am a developer living just outside of Edinburgh, Scotland
 I have been writing C# for the better part of 15 years, and F# on the side for about 10 years.
 I have also become particularly interested in Rust and WASM.
 
+You can find out more about the projects I have worked on on my [About Me](/aboutme.html) page
+
 ## Posts
 
 <ul>
