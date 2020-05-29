@@ -1,4 +1,4 @@
-<nav>
+<nav class="site-nav">
   {% for item in site.data.navigation %}
     <a href="{{ item.link }}" {% if page.url == item.link %}class="active"{% endif %}>
       {{ item.name }}
