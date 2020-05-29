@@ -2,3 +2,5 @@ theme: jekyll-theme-slate
 title: My Dev Blog
 description: A place to share things I've done, various coding experiments, and random ideas
 paginate: 5
+plugins:
+    - jekyll-sitemap
