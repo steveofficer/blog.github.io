@@ -37,7 +37,7 @@ Then from the rows, we can find all the columns.
 Graphically and at a high level this is what we are trying to do:
 
 Read in a textual representation of the crossword grid:
-`
+```
 +-++++++++
 +-++++++++
 +-------++
@@ -48,7 +48,7 @@ Read in a textual representation of the crossword grid:
 +++++-++++
 +++++-++++
 ++++++++++
-`
+```
 
 which represents the crossword grid ![Blank crossword](/assets/images/posts/2020-05-29/EmptyCrossWord.png)
 
