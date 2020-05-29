@@ -4,14 +4,14 @@
 @import "{{ site.theme }}";
 
 nav.site-nav {
-  font-size: 1.8 em;
+  font-size: 1.3em;
   text-align: center;
   
   a {
     color: whitesmoke;
     margin: 10px;
     
-    .active {
+    &:.active {
       text-decoration: underline orange;
     }
   }
