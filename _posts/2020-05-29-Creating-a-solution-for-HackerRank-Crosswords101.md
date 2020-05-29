@@ -34,6 +34,21 @@ I first considered a graph based model algorithm, but I thought that the second 
 Because we read the grid in row by row, it makes sense to build the rows of the grid while we receive the data.
 Then from the rows, we can find all the columns.
 
+Graphically and at a high level this is what we are trying to do:
+
+```
++-++++++++
++-++++++++
++-------++
++-++++++++
++-++++++++
++------+++
++-+++-++++
++++++-++++
++++++-++++
+++++++++++
+```
+ represents the crossword grid 
 It is then a dynamic programming problem, where we are trying to map a set of words to a set of spaces, trying each word against each space.
 One optimization we can make is that because we know the length of each word, and we know the length of each space we can compare then lengths and only consider pairs with the same length.
 Another constraint we need to apply is that Rows and Columns can intersect and share common characters. So we need to consider the characters already present in the grid when we try to match a word to a space.
