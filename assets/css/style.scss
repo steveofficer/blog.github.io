@@ -5,9 +5,14 @@
 
 nav.siteNav {
   font-size: 1.8 em;
+  text-align: center;
   
   a {
     color: whitesmoke;
     margin: 10px;
+    
+    .active {
+      text-decoration: underline orange;
+    }
   }
 }
