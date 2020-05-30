@@ -66,15 +66,17 @@ We have found 4 contiguous regions.
 
 Which is great because we have 4 words that we are trying to place, namely `AGRA, NORWAY, ENGLAND, GWALIOR`
 
-One immediate optimization we can make is to sort the words and regions by length frequency so that we can make sure we can quickly shrink the search space. This is because we can quickly eliminate the regions that only have a few possibilities, and then do trial and error on the spaces that have many possibilities.
+We have the following constraints when we match words to regions:
+1. The length of the word vs the length of the region. We can only match a word to a space if they have the same length.
+1. The blocks that are already filled. If the region overlaps with other regions, we can only match words that have the same characters in the overlapped blocks.
+
+Perhaps one immediate optimization we can make is to sort the words and regions by length frequency so that we can make sure we can quickly shrink the search space. This is because we can quickly eliminate the regions that only have a few possibilities, and then do trial and error on the spaces that have many possibilities.
 
 In this case, we know that `AGRA` is the only word that can appear at `(5,5), (5,8)` and we know that `NORWAY` is the only word that can appear at `(1,5), (6,5)`.
-So what we are left with is deciding how to match `ENGLAND` and `GWALIOR`, which gives us a search space of `2` vs an original search space of `24`. Nice, 12 times performance boost :)
+So what we are left with is deciding how to match `ENGLAND` and `GWALIOR`, which gives us a search space of `2` vs an original search space of `24`. Nice, 12 times performance boost (ignoring the cost of creating the frequency map and the sort) :)
 
 ![Match Exact Matches](/assets/images/posts/2020-05-29/PartiallyFilled.png)
 
-In order to place words, we have 2 constraints:
-1. The length of the word vs the length of the region. We can only match a word to a space if they have the same length.
-1. The blocks that are already filled. If the region overlaps with other regions, we can only match words that have the same characters in the overlapped blocks.
+
 
 This is a dynamic programming problem, where we can break the problem down by matching 1 word to 1 space, removing them from the search space, and then trying to solve the problem with the remaining words and regions.
