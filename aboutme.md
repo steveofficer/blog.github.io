@@ -16,7 +16,7 @@ My name is Steve
 
 ## Education
 
-### The Open Universiry
+### The Open University
 
 ### Van Zyl & Pritchard
 
