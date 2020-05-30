@@ -78,5 +78,11 @@ So what we are left with is deciding how to match `ENGLAND` and `GWALIOR`, which
 ![Match Exact Matches](/assets/images/posts/2020-05-29/PartiallyFilled.png)
 
 
-
 This is a dynamic programming problem, where we can break the problem down by matching 1 word to 1 space, removing them from the search space, and then trying to solve the problem with the remaining words and regions.
+
+## The code
+
+Reading the grid rows from the console
+```fsharp
+let rows = [ for _ in 0..9 -> System.Console.ReadLine() ]
+```
