@@ -69,7 +69,7 @@ Which is great because we have 4 words that we are trying to place, namely `AGRA
 One immediate optimization we can make is to sort the words and regions by length frequency so that we can make sure we can quickly shrink the search space. This is because we can quickly eliminate the regions that only have a few possibilities, and then do trial and error on the spaces that have many possibilities.
 
 In this case, we know that `AGRA` is the only word that can appear at `(5,5), (5,8)` and we know that `NORWAY` is the only word that can appear at `(1,5), (6,5)`.
-So what we are left with is deciding how to match `ENGLAND` and `GWALIOR`, which gives us a search space of `2`
+So what we are left with is deciding how to match `ENGLAND` and `GWALIOR`, which gives us a search space of `2` vs an original search space of `24`. Nice, 12 times performance boost :)
 
 ![Match Exact Matches](/assets/images/posts/2020-05-29/PartiallyFilled.png)
 
