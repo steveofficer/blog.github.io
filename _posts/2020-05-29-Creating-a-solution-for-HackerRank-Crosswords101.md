@@ -1,6 +1,6 @@
 ---
 layout: post
-tags: F# DynamicProgramming Graphs
+tags: F# DynamicProgramming
 ---
 
 I was wanting to exercise my functional programming muscles, so I thought I would tackle a HackerRank puzzle as they have a wide variety of problems that have already been thought out and are easy to just pick up and chew on.
