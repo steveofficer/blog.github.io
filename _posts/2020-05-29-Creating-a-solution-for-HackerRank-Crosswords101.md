@@ -84,5 +84,20 @@ This is a dynamic programming problem, where we can break the problem down by ma
 
 Reading the grid rows from the console
 ```fsharp
-let rows = [ for _ in 0..9 -> System.Console.ReadLine() ]
+// Just for testing purposes we have these hard coded.
+let rows = [| 
+    "+-++++++++"; "+-++++++++"; "+-------++"; "+-++++++++"; "+-++++++++"; "+------+++"; "+-+++-++++"; "+++++-++++"; "+++++-++++"; "++++++++++"
+|]
+let words = [ "AGRA"; "NORWAY"; "ENGLAND"; "GWALIOR" ]
+
+// The code
+let parse_row (row: string) = 
+    row.ToCharArray()
+    |> Array.mapi (fun c i -> i,c)
+    |> Array.filter (fst >> ((=) '-'))
+    |> Array.fold (fun state (c,x) -> c::state ) []
+
+
+[ for i in 0..10 -> rows.[i] |> parse_row ] 
+|> printfn "%A"
 ```
