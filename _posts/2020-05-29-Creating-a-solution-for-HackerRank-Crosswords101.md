@@ -61,7 +61,7 @@ We then want to find all the contiguous regions that represent the placeholders 
 We have found 4 contiguous regions.
 1. Starts at (1,0). Ends at (1,6).
 1. Starts at (5,5). Ends at (5,8).
-1. Starts at (1,2). Ends at (6,2).
+1. Starts at (1,2). Ends at (7,2).
 1. Starts at (1,5). Ends at (6,5).
 
 Which is great because we have 4 words that we are trying to place, namely `AGRA, NORWAY, ENGLAND, GWALIOR`
