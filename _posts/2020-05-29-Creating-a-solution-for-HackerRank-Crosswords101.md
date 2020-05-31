@@ -98,21 +98,34 @@ type Region = {
         let dx = fst this.End - fst this.Start
         let dy = snd this.End - snd this.Start
         Math.Max(dx, dy) + 1
-        
+
+type Grid = Map<int*int, char>
+
 let parse_row (y: int) (row: string) = 
-    row.ToCharArray()
-    |> Array.mapi (fun x c -> x,c)
-    |> Array.filter (snd >> ((=) '-'))
-    |> Array.fold 
-        (fun regions (x, _) -> 
-            match regions with
-            | h::t when x - fst(h.End) = 1 -> { h with End = (x,y) }::t
-            | t -> { Start = (x,y); End = (x,y) }::t
-        )
-        []
-    |> List.filter (fun r -> r.Length > 1)
+    let (grid, regions) =
+        row.ToCharArray()
+        |> Array.mapi (fun x c -> x,c)
+        |> Array.filter (snd >> ((=) '-'))
+        |> Array.fold 
+            (fun (grid, regions) (x, _) -> 
+                let next_grid = Map.add (x,y) ' ' grid
 
+                let next_regions =
+                    match regions with
+                    | h::t when x - fst(h.End) = 1 -> { h with End = (x,y) }::t
+                    | t -> { Start = (x,y); End = (x,y) }::t
+            
+                (next_grid, next_regions)
+            )
+            (Map.empty, [])
+    (grid, regions |> List.filter (fun r -> r.Length > 1))
 
-[ for i in 0..10 -> rows.[i] |> parse_row ] 
-|> printfn "%A"
+let merge_grids (gridA: Grid) (gridB: Grid) =
+    let itemsA = Map.toList gridA
+    let itemsB = Map.toList gridB
+    itemsA@itemsB |> Map.ofList
+    
+[ for i in 0..9 -> rows.[i] |> parse_row i ] 
+    |> List.fold (fun (grid, regions) (g,r) -> (merge_grids grid g, r@regions )) (Map.empty, [])
+    |> printfn "%A" 
 ```
