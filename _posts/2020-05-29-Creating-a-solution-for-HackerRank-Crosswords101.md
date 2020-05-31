@@ -91,11 +91,18 @@ let rows = [|
 let words = [ "AGRA"; "NORWAY"; "ENGLAND"; "GWALIOR" ]
 
 // The code
-let parse_row (row: string) = 
+let parse_row (y: int) (row: string) = 
     row.ToCharArray()
-    |> Array.mapi (fun c i -> i,c)
-    |> Array.filter (fst >> ((=) '-'))
-    |> Array.fold (fun state (c,x) -> c::state ) []
+    |> Array.mapi (fun x c -> x,c)
+    |> Array.filter (snd >> ((=) '-'))
+    |> Array.fold 
+        (fun regions (x, _) -> 
+            match regions with
+            | h::t when x - fst(h.End) = 1 -> { h with End = (x,y) }::t
+            | t -> { Start = (x,y); End = (x,y) }::t
+        )
+        []
+    |> List.filter (fun r -> r.Length > 1)
 
 
 [ for i in 0..10 -> rows.[i] |> parse_row ] 
