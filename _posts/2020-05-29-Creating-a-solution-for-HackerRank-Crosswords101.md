@@ -91,6 +91,14 @@ let rows = [|
 let words = [ "AGRA"; "NORWAY"; "ENGLAND"; "GWALIOR" ]
 
 // The code
+type Region = {
+    Start: (int*int)
+    End: (int*int)
+} with member this.Length = 
+        let dx = fst this.End - fst this.Start
+        let dy = snd this.End - snd this.Start
+        Math.Max(dx, dy) + 1
+        
 let parse_row (y: int) (row: string) = 
     row.ToCharArray()
     |> Array.mapi (fun x c -> x,c)
