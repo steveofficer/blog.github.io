@@ -100,13 +100,7 @@ let rows = [|
 let words = [ "AGRA"; "NORWAY"; "ENGLAND"; "GWALIOR" ]
 
 // The code
-type Region = {
-    Start: (int*int)
-    End: (int*int)
-} with member this.Length = 
-        let dx = fst this.End - fst this.Start
-        let dy = snd this.End - snd this.Start
-        Math.Max(dx, dy) + 1
+type Region = (int*int) list
 
 type Grid = Map<int*int, char>
 
@@ -118,23 +112,68 @@ let parse_row (y: int) (row: string) =
         |> Array.fold 
             (fun (grid, regions) (x, _) -> 
                 let next_grid = Map.add (x,y) ' ' grid
-
                 let next_regions =
                     match regions with
-                    | h::t when x - fst(h.End) = 1 -> { h with End = (x,y) }::t
-                    | t -> { Start = (x,y); End = (x,y) }::t
+                    | h::t when x - fst (List.head h) = 1 -> ((x,y)::h)::t
+                    | t -> [(x,y)]::t
             
                 (next_grid, next_regions)
             )
             (Map.empty, [])
-    (grid, regions |> List.filter (fun r -> r.Length > 1))
+    (grid, regions |> List.filter (fun r -> r.Length > 1) |> List.map List.rev)
+
+let calculate_columns (m: Grid) = 
+    Seq.collect (fun x -> seq {for y in 0..9 -> (x,y)}) (seq {0..9})
+    |> Seq.filter (fun (x,y) -> m.ContainsKey(x,y)) 
+    |> Seq.fold
+        (fun regions (x,y) -> 
+            match regions with
+            | h::t when y - snd (List.head h) = 1 -> ((x,y)::h)::t
+            | t -> [(x,y)]::t
+        ) 
+        []
+    |> Seq.filter (fun r -> r.Length > 1) |> Seq.map List.rev
+    |> List.ofSeq
 
 let merge_grids (gridA: Grid) (gridB: Grid) =
     let itemsA = Map.toList gridA
     let itemsB = Map.toList gridB
     itemsA@itemsB |> Map.ofList
+
+let draw (grid: Grid) =
+    [0..9]
+    |> List.iter (fun y -> printfn "%s" ([0..9] |> List.map (fun x -> match grid.TryGetValue((x,y)) with | (true, c) -> c | _ -> '+') |> String.Concat))
+
+let fits_in (region: Region) (grid: Grid) (word: char list) =
+    if (region.Length <> word.Length)
+    then false
+    else 
+        word
+        |> List.zip region
+        |> List.forall (fun (coord, c) -> match grid.Item coord with | ' ' -> true | x when x = c -> true | _ -> false)
+
+let rec solve (grid: Grid) (regions: Region list) (words: char list list) =
+    match (regions, words) with
+    | ([],[]) -> Some grid
+    | (rh::rt, wh::wt) when wh |> fits_in rh grid -> 
+        
+        solve grid rt wt
+    | _ -> None
     
-[ for i in 0..9 -> rows.[i] |> parse_row i ] 
-|> List.fold (fun (grid, regions) (g,r) -> (merge_grids grid g, r@regions)) (Map.empty, [])
-|> printfn "%A" 
+let (grid, rows) =
+        [ for i in 0..9 -> rows.[i] |> parse_row i ] 
+        |> List.fold (fun (grid, regions) (g,r) -> (merge_grids grid g, r@regions )) (Map.empty, [])
+    
+let regions = 
+    List.append
+        rows
+        (calculate_columns grid)
+
+regions |> List.iter (fun r -> 
+    r |> List.iter (printf "%A")
+    printfn ""
+)
+let solved_grid = solve grid regions words
+
+draw solved_grid
 ```
