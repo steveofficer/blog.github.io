@@ -142,7 +142,7 @@ let merge_grids (gridA: Grid) (gridB: Grid) =
 
 let draw (grid: Grid) =
     [0..9]
-    |> List.iter (fun y -> printfn "%s" ([0..9] |> List.map (fun x -> match grid.TryGetValue((x,y)) with | (true, c) -> c | _ -> '+') |> String.Concat))
+    |> List.iter (fun y -> printfn "%s" ([0..9] |> List.map (fun x -> match grid.TryFind((x,y)) with | Some c -> c | _ -> '+') |> String.Concat))
 
 let fits_in (region: Region) (grid: Grid) (word: char list) =
     if (region.Length <> word.Length)
@@ -152,28 +152,38 @@ let fits_in (region: Region) (grid: Grid) (word: char list) =
         |> List.zip region
         |> List.forall (fun (coord, c) -> match grid.Item coord with | ' ' -> true | x when x = c -> true | _ -> false)
 
+let rec permutations = function
+    | []      -> seq [List.empty]
+    | x :: xs -> Seq.collect (insertions x) (permutations xs)
+and insertions x = function
+    | []             -> [[x]]
+    | (y :: ys) as xs -> (x::xs)::(List.map (fun x -> y::x) (insertions x ys))
+
 let rec solve (grid: Grid) (regions: Region list) (words: char list list) =
-    match (regions, words) with
-    | ([],[]) -> Some grid
-    | (rh::rt, wh::wt) when wh |> fits_in rh grid -> 
-        
-        solve grid rt wt
-    | _ -> None
+    permutations words
+    |> Seq.choose (fun w ->
+        match (regions, w) with
+        | ([],[]) -> Some grid
+        | (rh::rt, wh::wt) when wh |> fits_in rh grid -> 
+            let new_grid = 
+                wh
+                |> List.zip rh
+                |> List.fold (fun (g: Grid) (coord, c) -> g.Add(coord, c)) grid
+            solve new_grid rt wt
+        | _ -> None
+    )
+    |> Seq.tryItem 0
     
 let (grid, rows) =
-        [ for i in 0..9 -> rows.[i] |> parse_row i ] 
-        |> List.fold (fun (grid, regions) (g,r) -> (merge_grids grid g, r@regions )) (Map.empty, [])
-    
+       [ for i in 0..9 -> rows.[i] |> parse_row i ] 
+       |> List.fold (fun (grid, regions) (g,r) -> (merge_grids grid g, r@regions )) (Map.empty, [])
+
 let regions = 
     List.append
         rows
         (calculate_columns grid)
 
-regions |> List.iter (fun r -> 
-    r |> List.iter (printf "%A")
-    printfn ""
-)
-let solved_grid = solve grid regions words
-
-draw solved_grid
+match solve grid regions words with
+| Some g -> draw g
+| _ -> printfn "no solution"
 ```
