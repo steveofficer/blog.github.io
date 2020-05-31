@@ -82,7 +82,6 @@ This is a dynamic programming problem, where we can break the problem down by ma
 
 ## The code
 
-Reading the grid rows from the console
 {% highlight fsharp linenos %}
 // Just for testing purposes we have these hard coded.
 let rows = [| 
