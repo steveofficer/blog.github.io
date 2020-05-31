@@ -126,6 +126,6 @@ let merge_grids (gridA: Grid) (gridB: Grid) =
     itemsA@itemsB |> Map.ofList
     
 [ for i in 0..9 -> rows.[i] |> parse_row i ] 
-    |> List.fold (fun (grid, regions) (g,r) -> (merge_grids grid g, r@regions )) (Map.empty, [])
-    |> printfn "%A" 
+|> List.fold (fun (grid, regions) (g,r) -> (merge_grids grid g, r@regions)) (Map.empty, [])
+|> printfn "%A" 
 ```
