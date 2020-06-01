@@ -82,7 +82,7 @@ This is a dynamic programming problem, where we can break the problem down by ma
 
 ## The code
 
-{% highlight fsharp linenos %}
+```fsharp
 // Just for testing purposes we have these hard coded.
 let rows = [| 
     "+-++++++++"
@@ -185,4 +185,4 @@ let regions =
 match solve grid regions words with
 | Some g -> draw g
 | _ -> printfn "no solution"
-{% endhighlight %}
+```
