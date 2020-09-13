@@ -39,11 +39,15 @@ From the image you can see that the portion of text that represents the Pull Req
 
 ## Train
 We then have to train the model, this is the point where the service looks through each intent and utterance and creates the model that "understands" a user's input.
+There isn't really much to explain at this point, it's just a case of clicking the button and waiting for the task to complete.
 
 ## Test
 There is a handy test utility in the portal that allows us to enter some text and see what the model predicts and what level of confidence the model has. Given the prediction we can then refine the model further by adding new utterances if necessary.
 Remember, that if any new utterances are added then the model must be retrained to pick the changes up.
+
 ![Test Tool](/assets/images/posts/2020-08-11/luis-test.jpg)
+
+In the above example we test an utterance of `deploy pull request 1000` and we can see that the model has predicted the `Deploy Pull Request` intent with a confidence of 96.9% and has also extracted the PullRequestId entity with a value of `1000`.
 
 ## Publish
 
