@@ -16,21 +16,21 @@ With this in mind I created a model that would support the following intents:
 
 Use the authoring portal to create the application
 
-Entities
+## Entities
 ![Entity Designer](/assets/images/posts/2020-08-11/luis-entities.jpg)
 
-Intents and utterances
+## Intents and utterances
 ![Intent Designer](/assets/images/posts/2020-08-11/luis-intents.jpg)
 
 ![Intent Utterance Designer](/assets/images/posts/2020-08-11/luis-utterances.jpg)
 
-Train
+## Train
 
-Test
+## Test
 ![Test Tool](/assets/images/posts/2020-08-11/luis-test.jpg)
 
-Publish
+## Publish
 
-Calling the prediction API
+## Calling the prediction API
 
-Putting it all together
+## Putting it all together
