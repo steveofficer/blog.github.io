@@ -26,7 +26,14 @@ For each intent we have to provide examples of what a user might say, this is th
 classify a user's input so that our client application can carry out the correct action.
 ![Intent Designer](/assets/images/posts/2020-08-11/luis-intents.jpg)
 
+I have 3 main intents that I want the bot to understand:
+1. Display a list of all of the pull requests. This is the `List Pull Requests` intent.
+1. Deploy a specific pull request to a test environment. This is the `Deploy Pull Request` intent.
+1. Display a list of all of the test environments. This is the `List Environments` intent.
+
 ![Intent Utterance Designer](/assets/images/posts/2020-08-11/luis-utterances.jpg)
+As an example of what utterances might look like, here is a list of utterances I entered for the `Deploy Pull Requests` intent.
+From the image you can see that the portion of text that represents the Pull Request identifier has been highlighted and labelled as the `Pull Request` entity.
 
 ## Train
 We then have to train the model, this is the point where the service looks through each intent and utterance and creates the model that "understands" a user's input.
